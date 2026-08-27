@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EventoPass</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        .whatsapp-btn:hover {
+            transform: scale(1.15) !important;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4) !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold fs-4 text-warning" asp-controller="Home" asp-action="Index">
+                    🎟️ EventoPass
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-semibold" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="#events-section">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="#reviews-section">Customer Reviews</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold text-warning" href="https://wa.me/201025529010?text=Hello!%20I%20have%20an%20inquiry%20regarding%20event%20bookings." target="_blank">
+                                💬 Support & Inquiries
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="d-flex gap-2">
+                        <a href="https://wa.me/201025529010?text=Hello!%20I%20want%20to%20inquire%20about%20hosting%20my%20event." target="_blank" class="btn btn-outline-warning rounded-pill px-4 btn-sm fw-bold">
+                            Host an Event
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container my-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0 text-white-50">&copy; 2026 - EventoPass Management System. Built with ASP.NET Core.</p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

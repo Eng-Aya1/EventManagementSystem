@@ -7,6 +7,33 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
+        /* Force body to take full viewport height to glue footer at the bottom */
+        html, body {
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        /* Reset footer margin/padding and force center alignment */
+        footer, .footer {
+            flex-shrink: 0;
+            margin-top: auto !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 1rem !important;
+            padding-top: 1rem !important;
+            text-align: center !important;
+        }
+
         .whatsapp-btn:hover {
             transform: scale(1.15) !important;
             box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4) !important;
@@ -56,13 +83,14 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-dark text-white py-4 mt-5">
-        <div class="container text-center">
-            <p class="mb-0 text-white-50">&copy; 2026 - EventoPass Management System. Built with ASP.NET Core.</p>
+    <!-- Centered Footer with Zero Bottom Margin -->
+    <footer class="border-top footer text-muted bg-dark text-white py-3 mt-auto w-100 text-center">
+        <div class="container text-center d-flex justify-content-center align-items-center">
+            <p class="mb-0 text-white-50 text-center w-100">&copy; 2026 - EventoPass Management System. Built with ASP.NET Core.</p>
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

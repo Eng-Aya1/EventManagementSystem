@@ -4,8 +4,38 @@
     ViewData["Title"] = "Discover & Book Events";
 }
 
+<!-- Custom Styles to remove space below footer & center text -->
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* Target site layout footer, remove bottom spacing and force center layout */
+    footer, .footer {
+        margin-top: auto !important;
+        margin-bottom: 0 !important;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+        text-align: center !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+        footer *, .footer * {
+            text-align: center !important;
+        }
+</style>
+
 <!-- Notification Alerts -->
-<!-- Enhanced Confirmation Alerts with Yes / No Buttons -->
 @if (TempData["Message"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show my-3 p-3 shadow-sm rounded-4 border-0 d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 bg-success-subtle border-start border-success border-4" role="alert">
@@ -15,9 +45,26 @@
         </div>
         <div class="d-flex gap-2 align-items-center">
             <span class="small fw-bold text-muted me-1">Confirm Action?</span>
-            <button type="button" class="btn btn-sm btn-success fw-bold rounded-pill px-3" data-bs-dismiss="alert">
-                ✓ Yes
-            </button>
+
+            <!-- Yes Button: Submits form to finalize booking and deduct ticket -->
+            @if (TempData["PendingBookingId"] != null)
+            {
+                <form asp-controller="Home" asp-action="FinalizeBooking" method="post" class="m-0 p-0 d-inline">
+                    <input type="hidden" name="id" value="@TempData["PendingBookingId"]" />
+                    <input type="hidden" name="seatCategory" value="@TempData["PendingSeatCategory"]" />
+                    <button type="submit" class="btn btn-sm btn-success fw-bold rounded-pill px-3">
+                        ✓ Yes
+                    </button>
+                </form>
+            }
+            else
+            {
+                <button type="button" class="btn btn-sm btn-success fw-bold rounded-pill px-3" data-bs-dismiss="alert">
+                    ✓ Yes
+                </button>
+            }
+
+            <!-- No Button: Just dismisses the alert without triggering any database change -->
             <button type="button" class="btn btn-sm btn-outline-danger fw-bold rounded-pill px-3" data-bs-dismiss="alert">
                 ✕ No
             </button>
@@ -39,6 +86,7 @@
         </div>
     </div>
 }
+
 <!-- Hero Section -->
 <div class="bg-primary text-white rounded-4 p-5 mb-5 shadow-lg position-relative overflow-hidden" style="background: linear-gradient(135deg, #0d6efd 0%, #052c65 100%);">
     <div class="row align-items-center py-3">
@@ -189,7 +237,7 @@
 </div>
 
 <!-- Testimonials / Customer Reviews Section -->
-<div id="reviews-section" class="bg-light p-5 rounded-4 shadow-sm mb-5">
+<div id="reviews-section" class="bg-light p-5 rounded-4 shadow-sm mb-4">
     <div class="text-center mb-5">
         <span class="badge bg-primary text-white mb-2 px-3 py-2 rounded-pill">What People Say</span>
         <h2 class="fw-bold">Attendees Feedback & Reviews</h2>

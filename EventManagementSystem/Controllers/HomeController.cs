@@ -111,18 +111,38 @@ namespace EventManagementSystem.Controllers
             return View(events.ToList());
         }
 
+        // Step 1: Shows confirmation alert with pending booking info WITHOUT deducting tickets
         [HttpPost]
         public IActionResult ConfirmBooking(int id, string seatCategory, decimal seatPrice)
         {
             var eventItem = _events.FirstOrDefault(e => e.Id == id);
             if (eventItem != null && eventItem.AvailableTickets > 0)
             {
-                eventItem.AvailableTickets--;
-                TempData["Message"] = $"?? Success! Your [{seatCategory}] seat for '{eventItem.Title}' has been booked for ${seatPrice}. Ticket confirmed!";
+                TempData["Message"] = $"Please confirm: Would you like to reserve 1 [{seatCategory}] seat for '{eventItem.Title}' at ${seatPrice}?";
+                TempData["PendingBookingId"] = id;
+                TempData["PendingSeatCategory"] = seatCategory;
             }
             else
             {
                 TempData["Error"] = "Sorry, no tickets available for this event!";
+            }
+            return RedirectToAction("Index");
+        }
+
+        // Step 2: Executed ONLY when the user clicks "? Yes" in the alert banner
+        [HttpPost]
+        public IActionResult FinalizeBooking(int id, string seatCategory)
+        {
+            var eventItem = _events.FirstOrDefault(e => e.Id == id);
+            if (eventItem != null && eventItem.AvailableTickets > 0)
+            {
+                // Deduct ticket ONLY here after explicit Yes confirmation
+                eventItem.AvailableTickets--;
+                TempData["Message"] = $"?? Success! Your seat for '{eventItem.Title}' ({seatCategory}) is officially confirmed and 1 ticket was deducted!";
+            }
+            else
+            {
+                TempData["Error"] = "Booking failed! The event might be sold out.";
             }
             return RedirectToAction("Index");
         }
